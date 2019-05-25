@@ -5,7 +5,7 @@ replaceClasses.setClassesTable(tableData1);
 
 fs.readFile("test-output/test.html", 'utf8', function (err, data) {
 	console.time("replace");
-	let result = replaceClasses.replaceText(data);
+	let result = replaceClasses.uglifyClass(data);
 	console.timeEnd("replace");
 	console.log("down",(data.length -result.length)/data.length,"%");
 	fs.writeFile("test-output/test2.html", result, 'utf8', ()=>{
