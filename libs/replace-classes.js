@@ -9,7 +9,7 @@ function setClassesTable(table) {
 }
 
 function isSkipCase(text) {
-	//Todo should log somewhere for case to convert this case later
+	//Todo should log somewhere for case converting this case later
 	let result = false;
 	let casesSkip = ["{{"];
 	_.each(casesSkip, c => {
@@ -34,10 +34,7 @@ function replaceText(text) {
 		// console.log("before", classesName);
 		_.each(classesTable, row => {
 			classesName = classesName.replace(row[0], row[1]);
-			// if(orginal !== text){
-			// 	console.log(row);
-			// 	orginal = text;
-			// }
+
 		});
 		// console.log("after", classesName);
 		replaces.push([orginal, classesName]);
