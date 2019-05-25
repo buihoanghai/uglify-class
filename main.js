@@ -1,7 +1,7 @@
 const replaceClasses = require("./libs/replace-classes");
-const tableData = require("./libs/class-table").data;
+const tableData1 = require("./libs/class-table1");
 const fs = require("fs");
-replaceClasses.setClassesTable(tableData);
+replaceClasses.setClassesTable(tableData1);
 
 fs.readFile("test-output/test.html", 'utf8', function (err, data) {
 	console.time("replace");

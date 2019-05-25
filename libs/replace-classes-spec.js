@@ -1,6 +1,7 @@
 const replaceClasses = require("./replace-classes");
-const classTable = require("./class-table.json");
 const fs = require("fs");
+const tableData1 = require("./class-table1.json");
+
 describe("replace-classes", () => {
 	describe("replaceText", () => {
 		// it("should return correct data", () => {
@@ -36,7 +37,7 @@ describe("replace-classes", () => {
 		// });
 		// it("should return correct data2", () => {
 		// 	replaceClasses.setClassesTable(
-		// 		classTable.data
+		// 		tableData1
 		// 	);
 		// 	let inputText = `<div class="relative absolute"></div>`;
 		// 	let expected = `<div class="cd n"></div>`;
@@ -48,7 +49,7 @@ describe("replace-classes", () => {
 		// });
 		// it("should return correct data3", () => {
 		// 	replaceClasses.setClassesTable(
-		// 		classTable.data
+		// 		tableData1
 		// 	);
 		// 	let inputText = `<span class="name blue"> <b class="blue">Logitech</b> M170 </span>`;
 		// 	let expected = `<span class="n9 at"> <b class="at">Logitech</b> M170 </span>`;
@@ -58,36 +59,36 @@ describe("replace-classes", () => {
 		//
 		// 	expect(expected).toEqual(outputText);
 		// });
-		it("should return correct data4", () => {
+		// it("should return correct data4", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		tableData1
+		// 	);
+		// 	fs.readFile("test-output/product.blade.php", 'utf8', (err, data) => {
+		// 		let inputText = data;
+		// 		let expected = 2088.;
+		// 		console.time("replace");
+		// 		let outputText = replaceClasses.replaceText(inputText);
+		// 		console.log(outputText);
+		// 		console.timeEnd("replace");
+		//
+		// 		expect(expected).toEqual(outputText.length);
+		// 	});
+		// });
+		it("should return correct data5", () => {
 			replaceClasses.setClassesTable(
-				classTable.data
+				tableData1
 			);
-			fs.readFile("test-output/product.blade.php", 'utf8', (err, data) => {
-				let inputText = data;
-				let expected = 2088.;
-				console.time("replace");
-				let outputText = replaceClasses.replaceText(inputText);
-				console.log(outputText);
-				console.timeEnd("replace");
+			let inputText = `<span class="h73 mv2 ml13-l mr13-l w-60 wc26r-l">
+        <span class="name blue lh-title overflow-hidden h33">
+        <span class="name blue lh-title overflow-hidden h33">
+ <b class="blue">{{{ $product['_source']['brand']['name'] }}}</b>`;
+			let expected = `<div class="cd n"></div>`;
+			console.time("replace");
+			let outputText = replaceClasses.replaceText(inputText);
+			console.timeEnd("replace");
 
-				expect(expected).toEqual(outputText.length);
-			});
+			expect(expected).toEqual(outputText);
 		});
-	// 	it("should return correct data5", () => {
-	// 		replaceClasses.setClassesTable(
-	// 			classTable.data
-	// 		);
-	// 		let inputText = `<span class="h73 mv2 ml13-l mr13-l w-60 wc26r-l">
- //        <span class="name blue lh-title overflow-hidden h33">
- //        <span class="name blue lh-title overflow-hidden h33">
- // <b class="blue">{{{ $product['_source']['brand']['name'] }}}</b>`;
-	// 		let expected = `<div class="cd n"></div>`;
-	// 		console.time("replace");
-	// 		let outputText = replaceClasses.replaceText(inputText);
-	// 		console.timeEnd("replace");
- //
-	// 		expect(expected).toEqual(outputText);
-	// 	});
 
 	});
 	describe("isSkipCase", () => {

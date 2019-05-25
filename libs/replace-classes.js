@@ -28,16 +28,29 @@ function replaceText(text) {
 	let replaces = [];
 	while ((matches = reget.exec(text))) {
 		let classesName = orginal = (matches[0]);
-		if(isSkipCase(classesName)){
+		if (isSkipCase(classesName)) {
 			continue;
 		}
 		// console.log("before", classesName);
-		_.each(classesTable, row => {
-			classesName = classesName.replace(row[0], row[1]);
+		let classes = classesName.replace("class=\"", "").replace("\"", "").split(" ");
+		let newClasses = [];
+		_.each(classes, cl => {
+			let uglyClass = classesTable[cl];
+			if (uglyClass) {
+				newClasses.push(uglyClass);
+			} else {
+				newClasses.push(cl);
+			}
 
 		});
-		// console.log("after", classesName);
-		replaces.push([orginal, classesName]);
+		//
+		// _.each(classesTable, row => {
+		// 	classesName = classesName.replace(row[0], row[1]);
+		//
+		let processedClasses = "class=\"" + newClasses.join(" ") +"\"";
+		// });
+		// console.log("after", processedClasses);
+		replaces.push([orginal, processedClasses]);
 	}
 	// console.log("replaces", replaces.length);
 	_.each(replaces, place => {
