@@ -22,39 +22,94 @@ function isSkipCase(text) {
 	return result;
 }
 
-function uglifyClass(text){
+function uglifyClass(text) {
 	let regexString = /amp-custom>.*?<\/style>/g;
 	let matches;
 	let processed;
 	let original;
 	while ((matches = regexString.exec(text))) {
 		let cssArea = original = (matches[0]);
-		cssArea = cssArea.replace("amp-custom>","").replace("</style>","")
+		cssArea = cssArea.replace("amp-custom>", "").replace("</style>", "")
 		// console.log("before", cssArea);
 		processed = replaceCSSArea(cssArea);
-		text = text.replace(original, "amp-custom>" + processed +"</style>");
+		text = text.replace(original, "amp-custom>" + processed + "</style>");
 	}
 	text = replaceHTMLArea(text);
 
 	return text;
 }
 
+function getUglyClass(className) {
+	if (className.indexOf('.') === -1) {
+		return;
+	}
+
+	let pureClass = className.replace(".", "");
+	// console.log("pureClass", pureClass);
+	let uglyClass = classesTable[pureClass];
+	// console.log("uglyClass", uglyClass);
+	if (!uglyClass) {
+		//Todo should monitor why the case not exist ugly class
+		 console.log("missing ugly class", pureClass);
+		return;
+	}
+	return ["." + pureClass, "." + uglyClass];
+}
+
+function getClasses(text) {
+	let result = [];
+	let temp = "";
+	for (let i = 0; i < text.length; i++) {
+		let ch = text[i];
+		if (/[\s.~>+:)]/.test(ch) && i !== 0) {
+			addClass(temp);
+			temp = ch;
+			continue;
+		}
+		if (i === text.length - 1) {
+			temp += ch;
+			addClass(temp);
+			break;
+		}
+		temp += ch;
+	}
+
+	function addClass(str) {
+		if (str.indexOf(".") > -1) {
+			result.push(temp);
+		}
+	}
+
+	return result;
+}
+
+function getClasses1(text) {
+	let regexString = /\..*?[.+~>\s\b]/gi;
+	let matches;
+	while ((matches = regexString.exec(text))) {
+		let original;
+		let className = original = (matches[0]);
+		// console.log(className);
+	}
+	return text.split(/[\s,+~>:]+/);
+}
+
 function replaceCSSArea(text) {
+	//Todo using table class will be faster but need to correct the dictionary first https://github.com/buihoanghai/uglify-class/issues/1
 	let cssNodes = cssReader.parse(text);
 	let replaces = [];
 	_.each(cssNodes, node => {
-		let className = node.query;
-		if (className.indexOf('.') === -1) {
-			return;
-		}
-		let pureClass = className.replace(/[\.{]/g, "");
-		// console.log("pureClass", pureClass);
-		let uglyClass = classesTable[pureClass];
-		// console.log("uglyClass", uglyClass);
-		if (uglyClass) {
-			replaces.push(["." + pureClass, "." + uglyClass]);
-			//Todo should monitor why the case not exist ugly class
-		}
+		let query = node.query;
+		// console.log("query", query);
+		let classes = getClasses(query);
+		// console.log("classes", classes);
+		_.each(classes, className => {
+			let uglyClass = getUglyClass(className);
+			if (uglyClass) {
+				replaces.push(uglyClass);
+			}
+		});
+
 	});
 	_.each(replaces, place => {
 		text = text.replace(place[0], place[1]);
@@ -151,6 +206,7 @@ const revealed = {
 	uglifyClass: uglifyClass,
 	replaceHTMLArea,
 	replaceCSSArea,
-	isSkipCase
+	isSkipCase,
+	getClasses
 };
 module.exports = revealed;
