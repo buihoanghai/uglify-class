@@ -1,5 +1,5 @@
 const replaceClasses = require("./libs/replace-classes");
-const tableData1 = require("./libs/class-table1");
+const tableData1 = require("./libs/class-table2");
 const fs = require("fs");
 replaceClasses.setClassesTable(tableData1);
 
