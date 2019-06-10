@@ -29,7 +29,7 @@ function uglifyClass(text) {
 	let original;
 	while ((matches = regexString.exec(text))) {
 		let cssArea = original = (matches[0]);
-		cssArea = cssArea.replace("amp-custom>", "").replace("</style>", "")
+		cssArea = cssArea.replace("amp-custom>", "").replace("</style>", "");
 		// console.log("before", cssArea);
 		processed = replaceCSSArea(cssArea);
 		text = text.replace(original, "amp-custom>" + processed + "</style>");
@@ -50,7 +50,7 @@ function getUglyClass(className) {
 	// console.log("uglyClass", uglyClass);
 	if (!uglyClass) {
 		//Todo should monitor why the case not exist ugly class
-		 console.log("missing ugly class", pureClass);
+		//   console.log("missing ugly class", pureClass);
 		return;
 	}
 	return ["." + pureClass, "." + uglyClass];
