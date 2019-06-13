@@ -173,7 +173,7 @@ function replaceHTMLArea(text) {
 			} else {
 				newClasses.push(cl);
 				//Todo should monitor why the case not exist ugly class
-				console.log("not exist ugly class", cl);
+				 console.log("not exist ugly class", cl);
 			}
 
 		});

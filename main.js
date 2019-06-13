@@ -25,33 +25,50 @@ replaceClasses.setClassesTable(tableData1);
 //
 // 	});
 // });
-function processFile1(){
+function processFile1() {
 	fs.readFile("test-output/product.blade.php", 'utf8', function (err, data) {
-	console.time("replace");
-	let result = replaceClasses.uglifyClass(data);
-	console.timeEnd("replace");
-	console.log("down",(data.length -result.length)/data.length,"%");
-	fs.writeFile("test-output/product1.blade.php", result, 'utf8', ()=>{
-
-	});
-});
-}
-function processFile() {
-	let files = globule.find("/home/haibui/projects/iprice/web/frontend/resources/views/**/*.blade.php");
-
-	_.each(files, async file => {
-		fs.readFile(file, 'utf8', function (err, data) {
-			console.time("replace");
-			let result = replaceClasses.uglifyClass(data);
-			console.timeEnd("replace");
-			console.log("down", (data.length - result.length) / data.length, "%");
-			fs.writeFile("test-output/test/product1"+ (+new Date())+".blade.php", result, 'utf8', () => {
-
-			});
+		console.time("replace");
+		let result = replaceClasses.uglifyClass(data);
+		console.timeEnd("replace");
+		console.log("down", (data.length - result.length) / data.length, "%");
+		fs.writeFile("test-output/product1.blade.php", result, 'utf8', () => {
 
 		});
 	});
+}
+
+function processFile() {
+	return new Promise(rev => {
+		let files = globule.find("/home/haibui/projects/iprice/web/frontend/resources/views/**/*.blade.php");
+		let promises = [];
+		_.each(files, async file => {
+			let d = new Promise(resolve => {
+				fs.readFile(file, 'utf8', function (err, data) {
+					// console.time("replace");
+					let result = replaceClasses.replaceHTMLArea(data);
+					// console.timeEnd("replace");
+					// console.log("down", (data.length - result.length) / data.length, "%");
+					resolve();
+					fs.writeFile("test-output/test/product1" + (+new Date()) + ".blade.php", result, 'utf8', () => {
+					});
+
+				});
+			});
+			promises.push(d);
+			//	console.log(promises.length);
+		});
+		Promise.all(promises).then(()=> {
+			rev();
+		});
+	});
+
 
 }
 
-processFile1();
+async function main() {
+	console.time("replace");
+	await processFile();
+	console.timeEnd("replace");
+}
+
+main();
