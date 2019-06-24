@@ -6,7 +6,7 @@ describe("generateTable", () => {
 
 		it("should return correct data2", () => {
 			let output = generateTable.generateUglyClasses();
-			console.log(output);
+			// console.log(output);
 			expect(null).not.toEqual(output);
 		});
 	});

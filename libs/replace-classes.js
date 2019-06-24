@@ -50,7 +50,7 @@ function getUglyClass(className) {
 	// console.log("uglyClass", uglyClass);
 	if (!uglyClass) {
 		//Todo should monitor why the case not exist ugly class
-		console.log("missing ugly class", pureClass);
+		//console.log("missing ugly class", pureClass);
 		return;
 	}
 	return ["." + pureClass, "." + uglyClass];
@@ -110,7 +110,7 @@ function replaceCSSArea(text) {
 			}
 			else{
 				//Todo should monitor why the case not exist ugly class
-				console.log("not exist ugly class", className);
+				// console.log("not exist ugly class", className);
 			}
 		});
 
@@ -173,7 +173,7 @@ function replaceHTMLArea(text) {
 			} else {
 				newClasses.push(cl);
 				//Todo should monitor why the case not exist ugly class
-				 console.log("not exist ugly class", cl);
+				//  console.log("not exist ugly class", cl);
 			}
 
 		});

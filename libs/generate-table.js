@@ -138,4 +138,4 @@ function isExist(className) {
 const revealed = {
 	generateUglyClasses
 };
-// module.exports = revealed;
+ module.exports = revealed;

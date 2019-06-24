@@ -1,6 +1,6 @@
-const replaceClasses = require("./libs/replace-classes");
-const tableData1 = require("./libs/class-table2");
-const dir = require("./libs/dir");
+const replaceClasses = require("../libs/replace-classes");
+const tableData1 = require("./class-table2");
+const dir = require("../libs/dir");
 const globule = require('globule');
 const _ = require('lodash');
 const fs = require("fs");
@@ -39,8 +39,9 @@ function processFile1() {
 
 function processFile() {
 	return new Promise(rev => {
-		let files = globule.find("/home/haibui/projects/iprice/web/frontend/resources/views/**/*.blade.php");
+		let files = globule.find("./**/*.blade.php");
 		let promises = [];
+		console.log("Total", files.length);
 		_.each(files, async file => {
 			let d = new Promise(resolve => {
 				fs.readFile(file, 'utf8', function (err, data) {
