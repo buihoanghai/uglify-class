@@ -1,6 +1,6 @@
 {
   "name": "uglify-class",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,9 @@
   "homepage": "https://github.com/buihoanghai/uglify-class#readme",
   "dependencies": {
     "globule": "^1.2.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "xmldom": "^0.1.27",
+    "xmlhttprequest": "^1.8.0",
+    "xpath.js": "^1.1.0"
   }
 }
