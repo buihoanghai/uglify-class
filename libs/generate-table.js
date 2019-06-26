@@ -18,15 +18,25 @@ const secondChar = [
 	"9", "-", "_"
 ];
 console.log(firstChar.length);
+let uglifyArr = [];
 var uglyClasses = generateUglyClasses();
 
 function generateUglyClasses() {
 	let result = {};
+	uglifyArr = [];
 	firstChar.forEach(c1 => {
+		uglifyArr.push(c1);
 		result[c1] = {used: false};
 		secondChar.forEach(c2 => {
+			uglifyArr.push(c1 + c2);
 			result[c1 + c2] = {used: false};
 		});
+	});
+	uglifyArr.sort(function (a, b) {
+		// ASC  -> a.length - b.length
+		// DESC -> b.length - a.length
+//   return b.length - a.length;
+		return a.length - b.length;
 	});
 	return result;
 }
@@ -45,7 +55,8 @@ function addRow(className) {
 
 function getUglifyName() {
 	let result;
-	for (let pp in uglyClasses) {
+	for (let i = 0; i < uglifyArr.length; i++) {
+		let pp = uglifyArr[i];
 		let cl = uglyClasses[pp];
 		if (!cl.used) {
 			result = pp;
@@ -53,13 +64,15 @@ function getUglifyName() {
 			break;
 		}
 	}
+
 	return result;
 }
 
 function isExist(className) {
 	return !!classTable[className];
 }
-function getClassesFromUrl(url){
+
+function getClassesFromUrl(url) {
 	const content = request.getResponse(url);
 	let doc = new DOMParser().parseFromString(content);
 	let result = [];
@@ -70,11 +83,12 @@ function getClassesFromUrl(url){
 	elems.forEach(e => {
 		let className = e.value;
 		if (!isNaN(className.length)) {
+			// console.log(className);
 			totalClassesLength += className.length;
 			classesCount += className.split(" ").length;
 			let cl = className.split(" ");
 			cl.forEach(c => {
-				if(!/[{}]/.exec(c)){
+				if (!/[{}]/.exec(c)) {
 					result.push(c);
 				}
 			});
@@ -82,8 +96,9 @@ function getClassesFromUrl(url){
 	});
 	return result;
 }
-function buildClassesDictionary(classes){
-	let result = [];
+
+function buildClassesDictionary(classes) {
+	let result = {};
 	let ps = [];
 
 	classes.sort(function (a, b) {
@@ -105,9 +120,16 @@ function buildClassesDictionary(classes){
 	}
 	return result;
 }
+
+function resetData() {
+	uglyClasses = generateUglyClasses();
+	classTable = {};
+}
+
 function createClassesDictionaryFromUrls(urls) {
+	resetData();
 	let classesAll = [];
-	urls.forEach(url=>{
+	urls.forEach(url => {
 		classesAll = classesAll.concat(getClassesFromUrl(url));
 	});
 	console.log(classesAll.length);
@@ -115,6 +137,7 @@ function createClassesDictionaryFromUrls(urls) {
 	return result;
 }
 
+console.log(createClassesDictionaryFromUrls);
 const revealed = {
 	getUglifyName,
 	generateUglyClasses,

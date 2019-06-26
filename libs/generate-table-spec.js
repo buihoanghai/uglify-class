@@ -23,7 +23,7 @@ describe("generateTable", () => {
 				"https://iprice.my/"
 			];
 			let output = generateTable.createClassesDictionaryFromUrls(input);
-			// console.log(output);
+			 console.log(generateTable.createClassesDictionaryFromUrls);
 			expect(undefined).not.toEqual(output);
 		});
 	});

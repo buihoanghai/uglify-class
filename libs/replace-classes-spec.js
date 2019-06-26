@@ -163,6 +163,19 @@ describe("replace-classes", () => {
 
 			expect(expected).toEqual(output);
 		});
+		it("should return correct data6", () => {
+			replaceClasses.setClassesTable(
+				{
+					"icon": "a",
+					"icon-a": "b"
+				}
+			);
+			let inputText = `.icon.icon-a{color:#fff}`;
+			let expected = `.a.b{color:#fff}`;
+			let output = replaceClasses.replaceCSSArea(inputText);
+
+			expect(expected).toEqual(output);
+		});
 	});
 	describe("uglifyClass", () => {
 

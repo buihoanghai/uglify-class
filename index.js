@@ -5,8 +5,8 @@ var revealed = {
 	uglifyClass: replaceClasses.uglifyClass,
 	setClassesTable: replaceClasses.setClassesTable,
 	replaceHTMLArea: replaceClasses.replaceHTMLArea,
-	replaceCSSArea: replaceClasses.replaceCSSArea,
-	createClassesDictionaryFromUrl : generateTable.generateUglyClasses
+	replaceCSS: replaceClasses.replaceCSSArea,
+	createClassesDictionaryFromUrl : generateTable.createClassesDictionaryFromUrls
 };
 
 module.exports = revealed;

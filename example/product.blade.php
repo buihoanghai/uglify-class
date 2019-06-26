@@ -36,7 +36,7 @@ use \iprice\frontend\Tracking\GoogleTagManager\Tracker;
             @if ($product['_source']['price']['discount'] > 0)
                 <span class="accent1 db b f16">{{ $currencyUtil->format($product['_source']['price']['sale']) }}</span>
             @endif
-            <span class="{{ Util->ugliClass($product['_source']['price']['discount'] > 0 ? 'f11 lh-11 original strike b dib' : 'accent b f16') }}">
+            <span class="{{ request($product['_source']['price']['discount'] > 0 ? 'f11 lh-11 original strike b dib' : 'accent b f16') }}">
                 {{ $currencyUtil->format($product['_source']['price']['original']) }}
             </span>
             @if ($product['_source']['price']['discount'] > 0)
