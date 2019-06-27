@@ -97,6 +97,7 @@ function getClasses1(text) {
 function replaceCSSArea(text) {
 	//Todo using table class will be faster but need to correct the dictionary first https://github.com/buihoanghai/uglify-class/issues/1
 	let cssNodes = cssReader.parse(text);
+	// console.log("node", cssNodes.length);
 	let replaces = [];
 	_.each(cssNodes, node => {
 		let query = node.query;

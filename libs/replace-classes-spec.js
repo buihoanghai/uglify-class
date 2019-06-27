@@ -1,6 +1,7 @@
 const replaceClasses = require("./replace-classes");
 const fs = require("fs");
 const tableData1 = require("../example/class-table1.json");
+const tableData2 = require("../example/dictionaries/plp.json");
 
 describe("replace-classes", () => {
 	describe("replaceHTMLArea", () => {
@@ -175,6 +176,21 @@ describe("replace-classes", () => {
 			let output = replaceClasses.replaceCSSArea(inputText);
 
 			expect(expected).toEqual(output);
+		});
+		it("should return correct data7", () => {
+			replaceClasses.setClassesTable(
+				tableData2
+			);
+			fs.readFile("example/iprice-home-min.css", 'utf8', (err, data) => {
+				console.log(data.length);
+				let expected = `.m-{overflow-x:auto}`;
+				console.time("Start");
+				let output = replaceClasses.replaceCSSArea(data);
+				console.timeEnd("Start");
+				expect(expected).toEqual(output);
+			});
+
+
 		});
 	});
 	describe("uglifyClass", () => {

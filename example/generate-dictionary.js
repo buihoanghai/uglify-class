@@ -30,6 +30,8 @@ function main() {
 			urls: [
 				"https://iprice.my/coupons/foodpanda/?_id=3787b5564086eb13126af9f13275d67d51a9ef00&position=1&sub_product=coupon-store&_exit=%2Fcoupons%2Ffoodpanda%2F",
 				"https://iprice.my/coupons/",
+				"https://iprice.my/coupons/stores/",
+				"https://iprice.my/coupons/e-wallet/",
 				"https://iprice.my/coupons/foodpanda/",
 			],
 			output: "coupons.json"
