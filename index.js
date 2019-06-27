@@ -1,12 +1,14 @@
 const replaceClasses = require("./libs/replace-classes");
 const generateTable = require("./libs/generate-table");
+const gulpPipe = require("./libs/gulp-pipe");
 
 var revealed = {
 	uglifyClass: replaceClasses.uglifyClass,
 	setClassesTable: replaceClasses.setClassesTable,
 	replaceHTMLArea: replaceClasses.replaceHTMLArea,
 	replaceCSS: replaceClasses.replaceCSSArea,
-	createClassesDictionaryFromUrl : generateTable.createClassesDictionaryFromUrls
+	createClassesDictionaryFromUrl : generateTable.createClassesDictionaryFromUrls,
+	gulpPipeCSS: gulpPipe.transformCSS
 };
 
 module.exports = revealed;

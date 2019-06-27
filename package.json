@@ -1,6 +1,6 @@
 {
   "name": "uglify-class",
-  "version": "0.1.2",
+  "version": "0.2.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,9 @@
   "dependencies": {
     "globule": "^1.2.1",
     "lodash": "^4.17.11",
+    "plugin-error": "^1.0.1",
+    "stream": "0.0.2",
+    "through2": "^3.0.1",
     "xmldom": "^0.1.27",
     "xmlhttprequest": "^1.8.0",
     "xpath.js": "^1.1.0"
