@@ -120,7 +120,7 @@ function replaceCSSArea(text) {
 		// DESC -> b.length - a.length
 		return b[0].length - a[0].length;
 	});
-	console.log(replaces);
+	// console.log(replaces);
 	_.each(replaces, place => {
 		text = text.replace(place[0], place[1]);
 	});
@@ -165,10 +165,13 @@ function replaceHTMLArea(text) {
 
 	let matches;
 	let replaces = [];
-	// console.log("start");
+	 // console.log("start");
 	while ((matches = regexString.exec(text))) {
 		let original;
 		let classesName = original = (matches[0]);
+		if(classesName.indexOf("\"\"")>-1){
+			continue;
+		}
 		classesName = classesName.replace(/\n/g,' ');
 		// console.log("classname",classesName);
 		if (isSkipCase(classesName)) {
@@ -178,6 +181,9 @@ function replaceHTMLArea(text) {
 		let classes = classesName.replace("class=\"", "").replace("\"", "").split(" ");
 		let newClasses = [];
 		_.each(classes, cl => {
+			if(cl.trim()===""){
+				return true;
+			}
 			let uglyClass = classesTable[cl];
 			if (uglyClass) {
 				newClasses.push(uglyClass);

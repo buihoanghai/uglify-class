@@ -5,6 +5,26 @@ const tableData2 = require("../example/dictionaries/uglify-class-dictionary.json
 
 describe("replace-classes", () => {
 	describe("replaceHTMLArea", () => {
+// 		it("should return correct data", () => {
+// 			replaceClasses.setClassesTable(
+// 				{
+// 					"relative": "a",
+// 					"absolute": "b"
+// 				}
+// 			);
+// 			let inputText = `<div class="relative
+// relative
+// relative
+// "></div><div class="absolute
+// absolute
+// "></div>`;
+// 			let expected = `<div class="a a a"></div><div class="b b"></div>`;
+// 			console.time("replace");
+// 			let outputText = replaceClasses.replaceHTMLArea(inputText);
+// 			console.timeEnd("replace");
+//
+// 			expect(expected).toEqual(outputText);
+// 		});
 		it("should return correct data", () => {
 			replaceClasses.setClassesTable(
 				{
@@ -12,13 +32,20 @@ describe("replace-classes", () => {
 					"absolute": "b"
 				}
 			);
-			let inputText = `<div class="relative
-relative
-relative
-"></div><div class="absolute
-absolute
-"></div>`;
-			let expected = `<div class="a a a "></div><div class="b b "></div>`;
+			let inputText = `<amp-carousel controls
+                          id="product-gallery"
+                          class=""
+                          type="slides"
+                          width="200"
+                          height="220"
+                          on="slideChange:AMP.setState({'productGalleryState':{selectedSlide: event.index}})">`;
+			let expected = `<amp-carousel controls
+                          id="product-gallery"
+                          class=""
+                          type="slides"
+                          width="200"
+                          height="220"
+                          on="slideChange:AMP.setState({'productGalleryState':{selectedSlide: event.index}})">`;
 			console.time("replace");
 			let outputText = replaceClasses.replaceHTMLArea(inputText);
 			console.timeEnd("replace");

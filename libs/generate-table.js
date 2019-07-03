@@ -25,35 +25,13 @@ function generateUglyClasses2Char() {
 	let result = {};
 	uglifyArr = [];
 	firstChar.forEach(c1 => {
-		uglifyArr.push(c1);
+		if (c1 !== "-") {
+			uglifyArr.push(c1);
+		}
 		result[c1] = {used: false};
 		secondChar.forEach(c2 => {
 			uglifyArr.push(c1 + c2);
 			result[c1 + c2] = {used: false};
-		});
-	});
-	uglifyArr.sort(function (a, b) {
-		// ASC  -> a.length - b.length
-		// DESC -> b.length - a.length
-//   return b.length - a.length;
-		return a.length - b.length;
-	});
-	return result;
-}
-function generateUglyClasses() {
-	//using 3 chars
-	let result = {};
-	uglifyArr = [];
-	firstChar.forEach(c1 => {
-		uglifyArr.push(c1);
-		result[c1] = {used: false};
-		secondChar.forEach(c2 => {
-			uglifyArr.push(c1 + c2);
-			result[c1 + c2] = {used: false};
-			secondChar.forEach(c3 => {
-				uglifyArr.push(c1 + c2 + c3);
-				result[c1 + c2 + c3] = {used: false};
-			});
 		});
 	});
 	uglifyArr.sort(function (a, b) {
@@ -65,6 +43,38 @@ function generateUglyClasses() {
 	return result;
 }
 
+function generateUglyClasses() {
+	//using 3 chars
+	let result = {};
+	uglifyArr = [];
+	firstChar.forEach(c1 => {
+		if (c1 !== "-") {
+			uglifyArr.push(c1);
+			result[c1] = {used: false};
+		}
+		secondChar.forEach(c2 => {
+			if (!(c1 === "-" && !isNaN(c2))) {
+				uglifyArr.push(c1 + c2);
+				result[c1 + c2] = {used: false};
+			}else{
+				// console.log("aaaaaaaaaaaaaaa", c1, c2);
+			}
+			secondChar.forEach(c3 => {
+				if (!(c1 === "-" && !isNaN(c2) && !isNaN(c3))) {
+					uglifyArr.push(c1 + c2 + c3);
+					result[c1 + c2 + c3] = {used: false};
+				}
+			});
+		});
+	});
+	uglifyArr.sort(function (a, b) {
+		// ASC  -> a.length - b.length
+		// DESC -> b.length - a.length
+//   return b.length - a.length;
+		return a.length - b.length;
+	});
+	return result;
+}
 
 
 function addRow(className) {
