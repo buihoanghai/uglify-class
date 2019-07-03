@@ -160,12 +160,17 @@ function replaceCSSArea1(text) {
 }
 
 function replaceHTMLArea(text) {
-	let regexString = new RegExp("class=\".*?\"", "gi");
+	 // let regexString = /(class=\")(.+?)(\")/s;
+	let regexString = new RegExp("(class=\")(.+?)(\")", "sg");
+
 	let matches;
 	let replaces = [];
+	// console.log("start");
 	while ((matches = regexString.exec(text))) {
 		let original;
 		let classesName = original = (matches[0]);
+		classesName = classesName.replace(/\n/g,' ');
+		// console.log("classname",classesName);
 		if (isSkipCase(classesName)) {
 			continue;
 		}

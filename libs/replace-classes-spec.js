@@ -7,82 +7,102 @@ describe("replace-classes", () => {
 	describe("replaceHTMLArea", () => {
 		it("should return correct data", () => {
 			replaceClasses.setClassesTable(
-				{"relative": "a"}
-			);
-			let inputText = `<div class="relative"></div>`;
-			let expected = `<div class="a"></div>`;
-			console.time("replace");
-			let outputText = replaceClasses.replaceHTMLArea(inputText);
-			console.timeEnd("replace");
-
-			expect(expected).toEqual(outputText);
-		});
-		it("should return correct data1", () => {
-			replaceClasses.setClassesTable(
 				{
 					"relative": "a",
 					"absolute": "b"
 				}
 			);
-			let inputText = `<div class="relative absolute"></div>`;
-			let expected = `<div class="a b"></div>`;
+			let inputText = `<div class="relative
+relative
+relative
+"></div><div class="absolute
+absolute
+"></div>`;
+			let expected = `<div class="a a a "></div><div class="b b "></div>`;
 			console.time("replace");
 			let outputText = replaceClasses.replaceHTMLArea(inputText);
 			console.timeEnd("replace");
 
 			expect(expected).toEqual(outputText);
 		});
-		it("should return correct data2", () => {
-			replaceClasses.setClassesTable(
-				tableData1
-			);
-			let inputText = `<div class="relative absolute"></div>`;
-			let expected = `<div class="cd n"></div>`;
-			console.time("replace");
-			let outputText = replaceClasses.replaceHTMLArea(inputText);
-			console.timeEnd("replace");
-
-			expect(expected).toEqual(outputText);
-		});
-		it("should return correct data3", () => {
-			replaceClasses.setClassesTable(
-				tableData1
-			);
-			let inputText = `<span class="name blue"> <b class="blue">Logitech</b> M170 </span>`;
-			let expected = `<span class="n8 as"> <b class="as">Logitech</b> M170 </span>`;
-			console.time("replace");
-			let outputText = replaceClasses.replaceHTMLArea(inputText);
-			console.timeEnd("replace");
-
-			expect(expected).toEqual(outputText);
-		});
-		it("should return correct data4", () => {
-			replaceClasses.setClassesTable(
-				tableData1
-			);
-			fs.readFile("example/product.blade.php", 'utf8', (err, data) => {
-				let inputText = data;
-				let expected = 2110;
-				console.time("replace");
-				let outputText = replaceClasses.replaceHTMLArea(inputText);
-				// console.log(outputText);
-				console.timeEnd("replace");
-
-				expect(expected).toEqual(outputText.length);
-			});
-		});
-		it("should return correct data5", () => {
-			replaceClasses.setClassesTable(
-				tableData1
-			);
-			let inputText = `<span class="h73 mv2 ml13-l mr13-l w-60 wc26r-l"><span class="name blue lh-title overflow-hidden h33"><span class="name blue lh-title overflow-hidden h33"><b class="blue">{{{ $product['_source']['brand']['name'] }}}</b>`;
-			let expected = `<span class="n6 ll n2 n3 n7 n4"><span class="n8 as n9 az n-"><span class="n8 as n9 az n-"><b class="as">{{{ $product['_source']['brand']['name'] }}}</b>`;
-			console.time("replace");
-			let outputText = replaceClasses.replaceHTMLArea(inputText);
-			console.timeEnd("replace");
-
-			expect(expected).toEqual(outputText);
-		});
+		// it("should return correct data", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		{"relative": "a"}
+		// 	);
+		// 	let inputText = `<div class="relative"></div>`;
+		// 	let expected = `<div class="a"></div>`;
+		// 	console.time("replace");
+		// 	let outputText = replaceClasses.replaceHTMLArea(inputText);
+		// 	console.timeEnd("replace");
+		//
+		// 	expect(expected).toEqual(outputText);
+		// });
+		// it("should return correct data1", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		{
+		// 			"relative": "a",
+		// 			"absolute": "b"
+		// 		}
+		// 	);
+		// 	let inputText = `<div class="relative absolute"></div>`;
+		// 	let expected = `<div class="a b"></div>`;
+		// 	console.time("replace");
+		// 	let outputText = replaceClasses.replaceHTMLArea(inputText);
+		// 	console.timeEnd("replace");
+		//
+		// 	expect(expected).toEqual(outputText);
+		// });
+		// it("should return correct data2", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		tableData1
+		// 	);
+		// 	let inputText = `<div class="relative absolute"></div>`;
+		// 	let expected = `<div class="cd n"></div>`;
+		// 	console.time("replace");
+		// 	let outputText = replaceClasses.replaceHTMLArea(inputText);
+		// 	console.timeEnd("replace");
+		//
+		// 	expect(expected).toEqual(outputText);
+		// });
+		// it("should return correct data3", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		tableData1
+		// 	);
+		// 	let inputText = `<span class="name blue"> <b class="blue">Logitech</b> M170 </span>`;
+		// 	let expected = `<span class="n8 as"> <b class="as">Logitech</b> M170 </span>`;
+		// 	console.time("replace");
+		// 	let outputText = replaceClasses.replaceHTMLArea(inputText);
+		// 	console.timeEnd("replace");
+		//
+		// 	expect(expected).toEqual(outputText);
+		// });
+		// it("should return correct data4", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		tableData1
+		// 	);
+		// 	fs.readFile("example/product.blade.php", 'utf8', (err, data) => {
+		// 		let inputText = data;
+		// 		let expected = 2102;
+		// 		console.time("replace");
+		// 		let outputText = replaceClasses.replaceHTMLArea(inputText);
+		// 		// console.log(outputText);
+		// 		console.timeEnd("replace");
+		//
+		// 		expect(expected).toEqual(outputText.length);
+		// 	});
+		// });
+		// it("should return correct data5", () => {
+		// 	replaceClasses.setClassesTable(
+		// 		tableData1
+		// 	);
+		// 	let inputText = `<span class="h73 mv2 ml13-l mr13-l w-60 wc26r-l"><span class="name blue lh-title overflow-hidden h33"><span class="name blue lh-title overflow-hidden h33"><b class="blue">{{{ $product['_source']['brand']['name'] }}}</b>`;
+		// 	let expected = `<span class="n6 ll n2 n3 n7 n4"><span class="n8 as n9 az n-"><span class="n8 as n9 az n-"><b class="as">{{{ $product['_source']['brand']['name'] }}}</b>`;
+		// 	console.time("replace");
+		// 	let outputText = replaceClasses.replaceHTMLArea(inputText);
+		// 	console.timeEnd("replace");
+		//
+		// 	expect(expected).toEqual(outputText);
+		// });
 
 	});
 	describe("isSkipCase", () => {
@@ -186,7 +206,7 @@ describe("replace-classes", () => {
 				let expected = `.a2u{overflow-x:auto}`;
 				console.time("Start");
 				let output = replaceClasses.replaceCSSArea(data);
-				fs.writeFile("example/iprice-home1.min.css",output, (err)=>{
+				fs.writeFile("example/iprice-home1.min.css", output, (err) => {
 					expect(expected).toEqual(output);
 				});
 				console.timeEnd("Start");
@@ -197,7 +217,7 @@ describe("replace-classes", () => {
 		it("should return correct data6", () => {
 			replaceClasses.setClassesTable(
 				{
-					"w-50":"fb",
+					"w-50": "fb",
 					// "w-50-l":"oo",
 				}
 			);
@@ -210,8 +230,8 @@ describe("replace-classes", () => {
 		it("should return correct data7", () => {
 			replaceClasses.setClassesTable(
 				{
-					"w-50":"fb",
-					"w-50-l":"oo",
+					"w-50": "fb",
+					"w-50-l": "oo",
 				}
 			);
 			let inputText = `.w-50-l{width:50%}.w-50{width:50%}`;
@@ -223,7 +243,7 @@ describe("replace-classes", () => {
 		it("should return correct data8", () => {
 			replaceClasses.setClassesTable(
 				{
-					"w-50":"fb",
+					"w-50": "fb",
 					// "w-50-l":"oo",
 				}
 			);
