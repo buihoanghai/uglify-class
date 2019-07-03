@@ -108,13 +108,19 @@ function replaceCSSArea(text) {
 			if (uglyClass) {
 				replaces.push(uglyClass);
 			}
-			else{
+			else {
 				//Todo should monitor why the case not exist ugly class
 				// console.log("not exist ugly class", className);
 			}
 		});
 
 	});
+	replaces.sort(function (a, b) {
+		// ASC  -> a.length - b.length
+		// DESC -> b.length - a.length
+		return b[0].length - a[0].length;
+	});
+	console.log(replaces);
 	_.each(replaces, place => {
 		text = text.replace(place[0], place[1]);
 	});
