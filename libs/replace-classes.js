@@ -94,7 +94,8 @@ function getClasses1(text) {
 	return text.split(/[\s,+~>:]+/);
 }
 
-function replaceCSSArea(text) {
+
+function replaceCSSArea1(text) {
 	//Todo using table class will be faster but need to correct the dictionary first https://github.com/buihoanghai/uglify-class/issues/1
 	let cssNodes = cssReader.parse(text);
 	let replaces = [];
@@ -160,19 +161,19 @@ function replaceCSSArea1(text) {
 }
 
 function replaceHTMLArea(text) {
-	 // let regexString = /(class=\")(.+?)(\")/s;
+	// let regexString = /(class=\")(.+?)(\")/s;
 	let regexString = new RegExp("(class=\")(.+?)(\")", "sg");
 
 	let matches;
 	let replaces = [];
-	 // console.log("start");
+	// console.log("start");
 	while ((matches = regexString.exec(text))) {
 		let original;
 		let classesName = original = (matches[0]);
-		if(classesName.indexOf("\"\"")>-1){
+		if (classesName.indexOf("\"\"") > -1) {
 			continue;
 		}
-		classesName = classesName.replace(/\n/g,' ');
+		classesName = classesName.replace(/\n/g, ' ');
 		// console.log("classname",classesName);
 		if (isSkipCase(classesName)) {
 			continue;
@@ -181,7 +182,7 @@ function replaceHTMLArea(text) {
 		let classes = classesName.replace("class=\"", "").replace("\"", "").split(" ");
 		let newClasses = [];
 		_.each(classes, cl => {
-			if(cl.trim()===""){
+			if (cl.trim() === "") {
 				return true;
 			}
 			let uglyClass = classesTable[cl];
@@ -224,12 +225,62 @@ function replaceText1(text) {
 	return text;
 }
 
+function replaceCSSArea(text) {
+	let classes = getClassesFromText(text);
+
+	_.each(classes, cl => {
+		let transform = cl.origin;
+		_.each(cl.classNames, className => {
+			if (classesTable[className]) {
+				let uglyClass = classesTable[className];
+				// console.log(className, uglyClass);
+				transform = transform.replace(className, uglyClass);
+			}
+		});
+		text = text.replace(cl.origin, transform);
+
+	});
+	return text;
+}
+
+function getClassesFromText(text) {
+	let regexString = /(\.)(.+?)([:>{ ,~+;}()])/sg;
+	// let regexString = new RegExp("(\.)(.+?)([:>{ ,~+;}()])", "sg");
+
+	let matches;
+	let result = [];
+	// console.log("start");
+	while ((matches = regexString.exec(text))) {
+		// console.log(matches);
+		let className = (matches[2]);
+		// console.log("classname", className);
+		let firstChar = className[0];
+		if (isNaN(firstChar) && className.length > 0) {
+			let classNames = className.split('.')
+			classNames.sort(function (a, b) {
+				// ASC  -> a.length - b.length
+				// DESC -> b.length - a.length
+				return b.length - a.length;
+			});
+			result.push(
+				{
+					classNames: classNames,
+					origin: matches[0]
+				}
+			);
+		}
+		// console.log("before", classesName);
+	}
+	return result;
+}
+
 const revealed = {
 	setClassesTable,
 	uglifyClass: uglifyClass,
 	replaceHTMLArea,
 	replaceCSSArea,
 	isSkipCase,
-	getClasses
+	getClasses,
+	getClassesFromText
 };
 module.exports = revealed;
