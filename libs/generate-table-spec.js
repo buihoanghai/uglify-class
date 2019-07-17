@@ -6,13 +6,12 @@ describe("generateTable", () => {
 
 		it("should return correct data2", () => {
 			let output = generateTable.generateUglyClasses();
-			console.log(output);
 			expect(undefined).not.toEqual(output);
 		});
 	});
 	describe("createClassesDictionaryFromUrls", () => {
 
-		it("should return correct data2", () => {
+		fit("should return correct data2", () => {
 			let input = [
 				"https://iprice.my/apple/",
 				"https://iprice.my/shoes/",
@@ -23,7 +22,6 @@ describe("generateTable", () => {
 				"https://iprice.my/"
 			];
 			let output = generateTable.createClassesDictionaryFromUrls(input);
-			 console.log(generateTable.createClassesDictionaryFromUrls);
 			expect(undefined).not.toEqual(output);
 		});
 	});

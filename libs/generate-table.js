@@ -8,12 +8,18 @@ const firstChar = [
 	"a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "k", "l", "m", "n", "o", "p", "q",
 	"r", "s", "t", "u", "v", "w", "y", "z",
+	"A", "B", "C", "D", "E", "F", "G", "H",
+	"I", "K", "L", "M", "N", "O", "P", "Q",
+	"R", "S", "T", "U", "V", "W", "Y", "Z",
 	"-", "_"
 ];
 const secondChar = [
 	"a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "k", "l", "m", "n", "o", "p", "q",
 	"r", "s", "t", "u", "v", "w", "y", "z",
+	"A", "B", "C", "D", "E", "F", "G", "H",
+	"I", "K", "L", "M", "N", "O", "P", "Q",
+	"R", "S", "T", "U", "V", "W", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8",
 	"9", "-", "_"
 ];
@@ -81,6 +87,7 @@ function addRow(className) {
 	if (className && !isExist(className)) {
 		if (className.length < 3) {
 			classTable[className] = className;
+			console.log(className);
 			uglyClasses[className].used = true;
 		} else {
 			classTable[className] = getUglifyName();
@@ -172,7 +179,6 @@ function createClassesDictionaryFromUrls(urls) {
 	return result;
 }
 
-console.log(createClassesDictionaryFromUrls);
 const revealed = {
 	getUglifyName,
 	generateUglyClasses,

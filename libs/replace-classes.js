@@ -1,6 +1,4 @@
 const _ = require('lodash');
-const CSSReader = require('./CSSReader');
-const cssReader = new CSSReader();
 let classesTable = [
 	["relative", "a"]
 ];
@@ -83,82 +81,6 @@ function getClasses(text) {
 	return result;
 }
 
-function getClasses1(text) {
-	let regexString = /\..*?[.+~>\s\b]/gi;
-	let matches;
-	while ((matches = regexString.exec(text))) {
-		let original;
-		let className = original = (matches[0]);
-		// console.log(className);
-	}
-	return text.split(/[\s,+~>:]+/);
-}
-
-
-function replaceCSSArea1(text) {
-	//Todo using table class will be faster but need to correct the dictionary first https://github.com/buihoanghai/uglify-class/issues/1
-	let cssNodes = cssReader.parse(text);
-	let replaces = [];
-	_.each(cssNodes, node => {
-		let query = node.query;
-		// console.log("query", query);
-		let classes = getClasses(query);
-		// console.log("classes", classes);
-		_.each(classes, className => {
-			let uglyClass = getUglyClass(className);
-			if (uglyClass) {
-				replaces.push(uglyClass);
-			}
-			else {
-				//Todo should monitor why the case not exist ugly class
-				// console.log("not exist ugly class", className);
-			}
-		});
-
-	});
-	replaces.sort(function (a, b) {
-		// ASC  -> a.length - b.length
-		// DESC -> b.length - a.length
-		return b[0].length - a[0].length;
-	});
-	// console.log(replaces);
-	_.each(replaces, place => {
-		text = text.replace(place[0], place[1]);
-	});
-
-	return text;
-}
-
-function replaceCSSArea1(text) {
-	let regexString = /\..*?[{]/g;
-	// let regexString = new RegExp("\..*?[,~:{ \.]", "gi");
-	let matches;
-	let replaces = [];
-	while ((matches = regexString.exec(text))) {
-		let original;
-		let className = original = (matches[0]);
-		// console.log("before", className);
-		if (className.indexOf('.') === -1) {
-			continue;
-		}
-		if (className.indexOf("}") > -1) {
-			className = className.split("}")[1];
-		}
-		let pureClass = className.replace(/[\.{]/g, "");
-		// console.log("pureClass", pureClass);
-		let uglyClass = classesTable[pureClass];
-		// console.log("uglyClass", uglyClass);
-		if (uglyClass) {
-			replaces.push(["." + pureClass, "." + uglyClass]);
-			//Todo should monitor why the case not exist ugly class
-		}
-	}
-	_.each(replaces, place => {
-		text = text.replace(place[0], place[1]);
-	});
-
-	return text;
-}
 
 function replaceHTMLArea(text) {
 	// let regexString = /(class=\")(.+?)(\")/s;
@@ -195,10 +117,6 @@ function replaceHTMLArea(text) {
 			}
 
 		});
-		//
-		// _.each(classesTable, row => {
-		// 	classesName = classesName.replace(row[0], row[1]);
-		//
 		let processedClasses = "class=\"" + newClasses.join(" ") + "\"";
 		// });
 		// console.log("after", processedClasses);
@@ -208,18 +126,6 @@ function replaceHTMLArea(text) {
 	_.each(replaces, place => {
 		// console.log(place);
 		text = text.replace(place[0], place[1]);
-	});
-
-	return text;
-}
-
-function replaceText1(text) {
-	_.each(classesTable, row => {
-		text = text.replace(new RegExp(row[0], "g"), row[1]);
-		// if(orginal !== text){
-		// 	console.log(row);
-		// 	orginal = text;
-		// }
 	});
 
 	return text;
