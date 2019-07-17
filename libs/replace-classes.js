@@ -1,4 +1,3 @@
-const _ = require('lodash');
 let classesTable = [
 	["relative", "a"]
 ];
@@ -11,7 +10,7 @@ function isSkipCase(text) {
 	//Todo should log somewhere for case converting this case later
 	let result = false;
 	let casesSkip = ["{{"];
-	_.each(casesSkip, c => {
+	casesSkip.forEach(c => {
 		if (text.indexOf(c) > -1) {
 			result = true;
 			return false;
@@ -103,7 +102,7 @@ function replaceHTMLArea(text) {
 		// console.log("before", classesName);
 		let classes = classesName.replace("class=\"", "").replace("\"", "").split(" ");
 		let newClasses = [];
-		_.each(classes, cl => {
+		classes.forEach(cl => {
 			if (cl.trim() === "") {
 				return true;
 			}
@@ -123,7 +122,7 @@ function replaceHTMLArea(text) {
 		replaces.push([original, processedClasses]);
 	}
 	// console.log("replaces", replaces.length);
-	_.each(replaces, place => {
+	replaces.forEach(place => {
 		// console.log(place);
 		text = text.replace(place[0], place[1]);
 	});
@@ -134,9 +133,9 @@ function replaceHTMLArea(text) {
 function replaceCSSArea(text) {
 	let classes = getClassesFromText(text);
 
-	_.each(classes, cl => {
+	classes.forEach(cl => {
 		let transform = cl.origin;
-		_.each(cl.classNames, className => {
+		cl.classNames.forEach(className => {
 			if (classesTable[className]) {
 				let uglyClass = classesTable[className];
 				// console.log(className, uglyClass);

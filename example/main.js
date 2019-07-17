@@ -1,7 +1,6 @@
 const replaceClasses = require("../libs/replace-classes");
 const tableData1 = require("./class-table2");
 const globule = require('globule');
-const _ = require('lodash');
 const fs = require("fs");
 replaceClasses.setClassesTable(tableData1);
 
@@ -22,7 +21,7 @@ function processFile() {
 		let files = globule.find("./**/*.blade.php");
 		let promises = [];
 		console.log("Total", files.length);
-		_.each(files, async file => {
+		files.forEach(async file => {
 			let d = new Promise(resolve => {
 				fs.readFile(file, 'utf8', function (err, data) {
 					// console.time("replace");

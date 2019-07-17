@@ -11,7 +11,7 @@ describe("generateTable", () => {
 	});
 	describe("createClassesDictionaryFromUrls", () => {
 
-		fit("should return correct data2", () => {
+		it("should return correct data2", () => {
 			let input = [
 				"https://iprice.my/apple/",
 				"https://iprice.my/shoes/",

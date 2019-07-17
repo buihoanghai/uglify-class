@@ -18,7 +18,6 @@
   "homepage": "https://github.com/buihoanghai/uglify-class#readme",
   "dependencies": {
     "globule": "^1.2.1",
-    "lodash": "^4.17.11",
     "plugin-error": "^1.0.1",
     "stream": "0.0.2",
     "through2": "^3.0.1",
