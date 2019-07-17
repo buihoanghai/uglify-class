@@ -30,7 +30,7 @@ describe("generateTable", () => {
 		it("should return correct data2", () => {
 			let output = generateTable.getUglifyName();
 			// console.log(output);
-			expect("a").toEqual(output);
+			expect("A").toEqual(output);
 		});
 	});
 });

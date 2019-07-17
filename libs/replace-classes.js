@@ -100,22 +100,32 @@ function replaceHTMLArea(text) {
 			continue;
 		}
 		// console.log("before", classesName);
-		let classes = classesName.replace("class=\"", "").replace("\"", "").split(" ");
+		let cls = classesName.replace("class=\"", "").replace("\"", "")
+		let classes = cls.split(" ");
 		let newClasses = [];
-		classes.forEach(cl => {
-			if (cl.trim() === "") {
-				return true;
-			}
-			let uglyClass = classesTable[cl];
-			if (uglyClass) {
-				newClasses.push(uglyClass);
-			} else {
-				newClasses.push(cl);
-				//Todo should monitor why the case not exist ugly class
-				//  console.log("not exist ugly class", cl);
-			}
+		classes.sort();
+		let combine = classes.join(" ");
+		if (classes.length > 1 && classesTable[combine]) {
+			// console.log("finded", combine, classesTable[combine]);
+			newClasses.unshift(classesTable[combine]);
+		}
+		else{
+			classes.forEach(cl => {
+				if (cl.trim() === "") {
+					return true;
+				}
+				let uglyClass = classesTable[cl];
+				if (uglyClass) {
+					newClasses.push(uglyClass);
+				} else {
+					newClasses.push(cl);
+					//Todo should monitor why the case not exist ugly class
+					//  console.log("not exist ugly class", cl);
+				}
 
-		});
+			});
+		}
+
 		let processedClasses = "class=\"" + newClasses.join(" ") + "\"";
 		// });
 		// console.log("after", processedClasses);
