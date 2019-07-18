@@ -84,10 +84,10 @@ function generateUglyClasses() {
 
 
 function addRow(className) {
-	if (className && !isExist(className)) {
-		if (className.length < 3) {
+	if (isNaN(className) && className && !isExist(className)) {
+		if (className.length < 3 && uglyClasses[className]) {
 			classTable[className] = className;
-			console.log(className);
+			 console.log("class",className);
 			uglyClasses[className].used = true;
 		} else {
 			classTable[className] = getUglifyName();
@@ -117,7 +117,10 @@ function isExist(className) {
 function getClassesFromUrl(url) {
 	const content = request.getResponse(url);
 	let doc = new DOMParser().parseFromString(content);
-	let result = [];
+	let result = {
+		classes : [],
+		combineClasses: []
+	};
 	let elems = select(doc, "//*/@class");
 	console.log("Count", elems.length);
 	let totalClassesLength = 0;
@@ -126,12 +129,15 @@ function getClassesFromUrl(url) {
 		let className = e.value;
 		if (!isNaN(className.length)) {
 			// console.log(className);
+			if(className.split(" ").length > 2){
+				result.combineClasses = filterCombineClass(result.combineClasses, className);
+			}
 			totalClassesLength += className.length;
 			classesCount += className.split(" ").length;
 			let cl = className.split(" ");
 			cl.forEach(c => {
 				if (!/[{}]/.exec(c)) {
-					result.push(c);
+					result.classes.push(c);
 				}
 			});
 		}
@@ -139,6 +145,14 @@ function getClassesFromUrl(url) {
 	return result;
 }
 
+function filterCombineClass(combineClasses, str) {
+	var formatStr = str.split(" ").sort().join(" ");
+	let result = combineClasses;
+	if (!formatStr.includes("{")) {
+		result[formatStr] = "";
+	}
+	return result;
+}
 function buildClassesDictionary(classes) {
 	let result = {};
 	let ps = [];
@@ -172,16 +186,24 @@ function createClassesDictionaryFromUrls(urls) {
 	resetData();
 	let classesAll = [];
 	urls.forEach(url => {
-		classesAll = classesAll.concat(getClassesFromUrl(url));
+		let data = getClassesFromUrl(url);
+		let combineClasses = data.combineClasses;
+		classesAll = classesAll.concat(data.classes);
+		for(let pp in combineClasses){
+			classesAll.push(pp);
+		}
 	});
 	console.log(classesAll.length);
 	let result = buildClassesDictionary(classesAll);
 	return result;
 }
 
+
 const revealed = {
 	getUglifyName,
+	getClassesFromUrl,
 	generateUglyClasses,
+	filterCombineClass,
 	createClassesDictionaryFromUrls
 };
 module.exports = revealed;

@@ -81,7 +81,7 @@ function getClasses(text) {
 }
 
 
-function replaceHTMLArea(text) {
+function replaceHTMLArea(text, needToCombine) {
 	// let regexString = /(class=\")(.+?)(\")/s;
 	let regexString = new RegExp("(class=\")(.+?)(\")", "sg");
 
@@ -105,8 +105,12 @@ function replaceHTMLArea(text) {
 		let newClasses = [];
 		classes.sort();
 		let combine = classes.join(" ");
-		if (classes.length > 1 && classesTable[combine]) {
-			// console.log("finded", combine, classesTable[combine]);
+		if(needToCombine && classes.length > 1 ){
+			console.log("try", combine, classesTable[combine]);
+
+		}
+		if (needToCombine && classes.length > 1 && classesTable[combine]) {
+			console.log("finded", combine, classesTable[combine]);
 			newClasses.unshift(classesTable[combine]);
 		}
 		else{
