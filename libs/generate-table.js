@@ -150,12 +150,13 @@ function buildClassesDictionary(classes) {
 		return a.length - b.length;
 	});
 	for (let i = 0; i < classes.length; i++) {
-		addRow(classes[i]);
-	}
-	for (let p in classTable) {
-		ps.push(p);
-	}
-	console.log("created table", ps.length);
+        addRow(classes[i]);
+    }
+
+    for (let p in classTable) {
+        ps.push(p);
+    }
+    console.log("created table", ps.length);
 	for (let i = 0; i < ps.length; i++) {
 		let p = ps[i];
 		result[p] = classTable[p];
@@ -170,18 +171,47 @@ function resetData() {
 
 function createClassesDictionaryFromUrls(urls) {
 	resetData();
-	let classesAll = [];
-	urls.forEach(url => {
-		classesAll = classesAll.concat(getClassesFromUrl(url));
-	});
-	console.log(classesAll.length);
+    let classesAll = [];
+    urls.forEach(url => {
+        classesAll = classesAll.concat(getClassesFromUrl(url));
+    });
 	let result = buildClassesDictionary(classesAll);
 	return result;
+}
+
+function getLongClassesFromUrl(url) {
+    const content = request.getResponse(url);
+    let doc = new DOMParser().parseFromString(content);
+    let longClasses = [];
+    let elems = select(doc, "//*/@class");
+    elems.forEach(e => {
+        let className = e.value;
+        if (className.split(" ").length > 1) {
+            className = className.split(" ");
+            className = className.sort();
+            className = className.join(" ");
+        } else {
+        	// console.log(className);
+		}
+		if (!className.includes('{{') && !className.includes('}}')) {
+
+            longClasses.push(className);
+        }
+    });
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index;
+    }
+    const uniqueLongClasses = longClasses.filter(unique);
+    let result = buildClassesDictionary(uniqueLongClasses);
+    console.log(result);
+
+    return result;
 }
 
 const revealed = {
 	getUglifyName,
 	generateUglyClasses,
-	createClassesDictionaryFromUrls
+	createClassesDictionaryFromUrls,
+    getLongClassesFromUrl
 };
 module.exports = revealed;

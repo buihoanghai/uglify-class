@@ -8,7 +8,8 @@ var revealed = {
 	replaceHTMLArea: replaceClasses.replaceHTMLArea,
 	replaceCSS: replaceClasses.replaceCSSArea,
 	createClassesDictionaryFromUrl : generateTable.createClassesDictionaryFromUrls,
-	gulpPipeCSS: gulpPipe.transformCSS
+	gulpPipeCSS: gulpPipe.transformCSS,
+    getLongClassesFromUrl : generateTable.getLongClassesFromUrl
 };
 
 module.exports = revealed;
