@@ -92,11 +92,19 @@ function main() {
 }
 
 function buildClassDictionary(input, fileName) {
-
-	let output = uglifyClass.createClassesDictionaryFromUrl(input);
+	// let output = uglifyClass.createClassesDictionaryFromUrl(input);
+	let longClasses = uglifyClass.getLongClassesFromUrl(input);
 	let filePath = "./example/dictionaries/" + fileName;
-	console.log(filePath);
-	fs.writeFile(filePath, JSON.stringify(output), 'utf8', (err) => {
+
+    // fs.writeFile(filePath, JSON.stringify(output), 'utf8', (err) => {
+	// 	if (err) {
+	// 		console.log('Some error occured - file either not saved or corrupted file saved.', err);
+	// 	} else {
+	// 		console.log(filePath, 'It\'s saved!');
+	// 	}
+	// });
+
+    fs.writeFile(filePath, JSON.stringify(longClasses), 'utf8', (err) => {
 		if (err) {
 			console.log('Some error occured - file either not saved or corrupted file saved.', err);
 		} else {
